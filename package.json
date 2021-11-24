@@ -1,0 +1,30 @@
+{
+  "name": "HerveHamann_6_23112021",
+  "version": "1.0.0",
+  "description": "Rien à installer ici, il suffit d'ouvrir le fichier `index.html`.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HerveHamann/HerveHamann_6_23112021.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HerveHamann/HerveHamann_6_23112021/issues"
+  },
+  "homepage": "https://github.com/HerveHamann/HerveHamann_6_23112021#readme",
+  "dependencies": {
+    "prettier": "^2.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0"
+  }
+}
