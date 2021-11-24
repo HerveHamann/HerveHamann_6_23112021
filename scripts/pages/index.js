@@ -1,31 +1,16 @@
 async function getPhotographers() {
-  // Penser à remplacer par les données récupérées dans le json
-  const photographers = [
-    {
-      name: "Ma data test",
-      id: 1,
-      city: "Paris",
-      country: "France",
-      tagline: "Ceci est ma data test",
-      price: 400,
-      portrait: "account.png",
-    },
-    {
-      name: "Autre data test",
-      id: 2,
-      city: "Londres",
-      country: "UK",
-      tagline: "Ceci est ma data test 2",
-      price: 500,
-      portrait: "account.png",
-    },
-  ];
-  // et bien retourner le tableau photographers seulement une fois
+  let photographers = [];
+
+  await fetch("./data/photographers.json")
+    .then((res) => res.json())
+    // eslint-disable-next-line no-return-assign
+    .then((data) => (photographers = data.photographers));
+  console.log(photographers);
+
   return {
-    photographers: [...photographers, ...photographers, ...photographers],
+    photographers,
   };
 }
-
 async function displayData(photographers) {
   const photographersSection = document.querySelector(".photographer_section");
 
