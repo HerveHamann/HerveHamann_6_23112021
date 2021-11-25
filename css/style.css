@@ -1,50 +1,91 @@
 @import url("photographer.css");
 
 body {
-    font-family: "DM Sans", sans-serif;
-    margin: 0;
+  font-family: "DM Sans", sans-serif;
+  margin: auto;
+  max-width: 1440px;
+  max-height: 1024px;
 }
 
-
 header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 90px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 120px;
+  margin-bottom: 8px;
 }
 
 h1 {
-    color: #901C1C;
-    margin-right: 100px;
+  color: #901c1c;
+  margin-right: 100px;
+  margin-top: 44px;
+  font-size: 2.25em;
+  font-style: normal;
+  font-weight: normal;
 }
 
 .logo {
-    height: 50px;
-    margin-left: 100px;
+  width: 200px;
+  height: 50px;
+  margin-left: 100px;
+  margin-top: 42px;
 }
 
 .photographer_section {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 70px;
-    margin-top: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 70px 115px;
+  margin: 84px 6px 0 0;
 }
 
 .photographer_section article {
-    justify-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.photographer_section article h2 {
-    color: #D3573C;
-    font-size: 36px;
+.photographer_section a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+.photographer_section article a h2 {
+  color: #d3573c;
+  font-size: 36px;
+  font-weight: 400;
+  margin: 20px 0 0 0;
 }
 
-.photographer_section article img {
-    height: 200px;
-    width: 200px;
+.photographer_section article a img {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0px;
+}
+
+img:hover {
+  transform: scale(1.2);
+  transition: 0.1s;
+}
+.photographer_section article p {
+  font-size: 0.8125em;
+  color: #901c1c;
+  margin: 0px;
+}
+
+.photographer_section article :nth-child(3) {
+  font-size: 0.625em;
+  color: black;
+  margin: 3px 0 0 0;
+}
+
+.photographer_section article :nth-child(4) {
+  font-size: 0.5625em;
+  color: #757575;
+  margin: 3px 0 0 0;
 }
