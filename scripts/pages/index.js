@@ -5,7 +5,6 @@ async function getPhotographers() {
     .then((res) => res.json())
     // eslint-disable-next-line no-return-assign
     .then((data) => (photographers = data.photographers));
-  console.log(photographers);
 
   return {
     photographers,
