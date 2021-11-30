@@ -1,4 +1,4 @@
-function photographerFactory(data) {
+export default function photographerFactory(data) {
   const { name, portrait, city, country, tagline, price, id } = data;
 
   const picture = `assets/photographers/${portrait}`;
@@ -9,6 +9,9 @@ function photographerFactory(data) {
     const link = document.createElement("a");
     link.setAttribute("href", `./photographer.html?id=${id}`);
     link.setAttribute("aria-label", name);
+
+    const articleDescription = document.createElement("article");
+    articleDescription.setAttribute("tabindex", "0");
 
     const img = document.createElement("img");
     img.setAttribute("src", picture);
@@ -29,9 +32,10 @@ function photographerFactory(data) {
     article.appendChild(link);
     link.appendChild(img);
     link.appendChild(h2);
-    article.appendChild(pLocation);
-    article.appendChild(pTagline);
-    article.appendChild(pPrice);
+    article.appendChild(articleDescription);
+    articleDescription.appendChild(pLocation);
+    articleDescription.appendChild(pTagline);
+    articleDescription.appendChild(pPrice);
     return article;
   }
   return { name, picture, city, country, tagline, price, id, getUserCardDOM };

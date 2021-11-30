@@ -15,6 +15,18 @@
       {
         "endOfLine": "auto"
       }
+    ],
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        "js": "always",
+        "mjs": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never",
+        "vue": "never"
+      }
     ]
   }
 }

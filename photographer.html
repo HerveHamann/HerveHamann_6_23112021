@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
@@ -17,15 +17,19 @@
       /></a>
     </header>
     <main id="main">
-      <div class="photograph-header">
-        <button
-          aria-label="Contact me"
-          class="contact_button"
-          onclick="displayModal()"
-        >
-          Contactez-moi
-        </button>
-      </div>
+      <div class="photograph-header"></div>
+
+      <form class="selection-form" method="post" action="traitement.php">
+        <p>
+          <label class="selection" for="classement">Trier par</label>
+          <select name="classement" id="classement">
+            <option value="Popularité">Popularité</option>
+            <option value="Date">Date</option>
+            <option value="Titre">Titre</option>
+          </select>
+        </p>
+      </form>
+      <div class="photograph-media"></div>
     </main>
     <div id="contact_modal">
       <div class="modal">
@@ -42,8 +46,8 @@
         </form>
       </div>
     </div>
-    <script src="/scripts/factories/photographerProfile.js"></script>
-    <script src="/scripts/pages/photographer.js"></script>
+
+    <script type="module" src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
   </body>
 </html>

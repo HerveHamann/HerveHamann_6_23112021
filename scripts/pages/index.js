@@ -1,18 +1,21 @@
+import photographerFactory from "../factories/photographer.js";
+
 async function getPhotographers() {
   let photographers = [];
 
   await fetch("./data/photographers.json")
     .then((res) => res.json())
-    // eslint-disable-next-line no-return-assign
-    .then((data) => (photographers = data.photographers));
 
+    .then((data) => {
+      photographers = data.photographers;
+    });
   return {
     photographers,
   };
 }
 async function displayData(photographers) {
   const photographersSection = document.querySelector(".photographer_section");
-
+  console.log(photographers);
   photographers.forEach((photographer) => {
     const photographerModel = photographerFactory(photographer);
     const userCardDOM = photographerModel.getUserCardDOM();

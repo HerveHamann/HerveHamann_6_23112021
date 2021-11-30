@@ -70,21 +70,21 @@ h1 {
 }
 
 img:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   transition: 0.1s;
 }
-.photographer_section article p {
+.photographer_section article article :nth-child(1) {
   font-size: 0.8125em;
   color: #901c1c;
 }
 
-.photographer_section article :nth-child(3) {
+.photographer_section article article :nth-child(2) {
   font-size: 0.625em;
   color: black;
   margin: 3px 0 0 0;
 }
 
-.photographer_section article :nth-child(4) {
+.photographer_section article article p {
   font-size: 0.5625em;
   color: #757575;
   margin: 3px 0 0 0;
