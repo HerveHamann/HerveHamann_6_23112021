@@ -4,7 +4,7 @@ export default function mediaFactory(data) {
   function getMediaCardDOM() {
     const article = document.createElement("article");
     if (image) {
-      const picture = `assets/images/${image}`;
+      const picture = `./assets/images/${image}`;
       const img = document.createElement("img");
       img.setAttribute("src", picture);
       img.setAttribute("alt", `${title}`);
