@@ -41,7 +41,13 @@ export default function profileFactory(data) {
 
     article.appendChild(btn);
     article.appendChild(img);
+    // ajout du prix dans la barre fixe
+    const fixedBar = document.querySelector(".fixed-bar");
+    const pPrice = document.createElement("p");
+    pPrice.textContent = `${price}€ / jour`;
+    pPrice.setAttribute("class", "price-by-day");
 
+    fixedBar.appendChild(pPrice);
     return article;
   }
   return { name, picture, city, country, tagline, price, id, getUserCardDOM };

@@ -70,7 +70,6 @@
 #classement {
   background-color: #901c1c;
   width: 170px;
-
   border-radius: 5px;
   color: white;
   font-size: 1.125em;
@@ -81,7 +80,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   column-gap: 93px;
-  border: red solid 1px;
   margin: 31px 100px 0 100px;
 }
 .media {
@@ -91,6 +89,43 @@
   object-fit: cover;
 }
 
+.legend {
+  display: flex;
+  justify-content: space-between;
+  color: #901c1c;
+  font-size: 1.5em;
+  margin: 7px 0 30px 0;
+}
+.legend-title {
+  width: 100%;
+}
+.legend-likes {
+  margin-right: 7px;
+}
+.fixed-bar {
+  width: 376px;
+  height: 68px;
+  background-color: #db8876;
+  color: #000000;
+  position: fixed;
+  bottom: 0px;
+  right: 38px;
+  font-size: 1.5em;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.price-by-day {
+  order: 3;
+
+  width: 100%;
+  text-align: end;
+  margin-right: 34px;
+}
+.total-likes {
+  margin: 0 7px 0 34px;
+}
 .modal {
   border-radius: 5px;
   background-color: #db8876;
