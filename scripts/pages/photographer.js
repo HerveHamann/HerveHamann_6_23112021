@@ -102,7 +102,7 @@ async function displayMedia(media) {
   heart.innerHTML = `<i class="fas fa-heart"></i>`;
   fixedBar.appendChild(heart);
 
-  // Ajout de la fonction + likes sur le total
+  // Ajout de la fonctionnalité + likes
   const hearts = document.querySelectorAll(".legend-heart");
 
   hearts.forEach((element) => {
@@ -121,7 +121,21 @@ async function displayMedia(media) {
       }
     });
   });
+
+  // Voir map() , voir sort()
+  const popularity = document.getElementById("choice-popularity");
+  popularity.addEventListener("click", () => {
+    async function switchMedia() {
+      mediaBoxes.sort((a, b) => a.likes - b.likes);
+
+      mediaBoxes.forEach((mediaboxe) => {
+        console.log(mediaboxe.likes);
+      });
+    }
+    switchMedia();
+  });
 }
+
 async function init() {
   // Récupère les datas des photographes
   const { photographers } = await getPhotographers();

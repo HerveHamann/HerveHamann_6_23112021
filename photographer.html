@@ -23,16 +23,22 @@
     <main id="main">
       <div class="photograph-header"></div>
       <article class="fixed-bar"></article>
-      <form class="selection-form" method="post" action="traitement.php">
-        <p>
-          <label class="selection" for="classement">Trier par</label>
-          <select name="classement" id="classement">
-            <option value="Popularité">Popularité</option>
-            <option value="Date">Date</option>
-            <option value="Titre">Titre</option>
-          </select>
-        </p>
-      </form>
+      <aside>
+        <p class="selection">Trier par:</p>
+        <div class="dropdown">
+          <div class="dropdown-button">
+            <p>Choix</p>
+            <div class="dropdown-arrow">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <ul class="dropdown-menu">
+            <li id="choice-popularity">Popularité</li>
+            <li id="choice-date">Date</li>
+            <li id="choice-title">titre</li>
+          </ul>
+        </div>
+      </aside>
       <div class="photograph-media"></div>
     </main>
     <div id="contact_modal">
@@ -50,8 +56,7 @@
         </form>
       </div>
     </div>
-    <script src="/scripts/factories/photographerProfile.js"></script>
-    <script src="/scripts/factories/photographerMedia.js"></script>
+
     <script type="module" src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
   </body>
