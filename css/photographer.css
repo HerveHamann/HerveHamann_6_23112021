@@ -85,17 +85,16 @@ aside {
   border: none;
   font-size: 1.125em;
   font-weight: 700;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 18px 0 20px;
 }
 
-/* .dropdown-button:hover {
+.dropdown-button:hover {
   background-color: #db8876;
   color: #000000;
-} */
+}
 .dropdown:hover .dropdown-arrow {
   transform: rotate(180deg);
 }
@@ -118,16 +117,17 @@ aside {
   margin-top: -3px;
 }
 
-.dropdown-menu li {
+.dropdown-menu-li {
   padding: 14px 0 14px 20px;
   position: relative;
 }
-/* .dropdown-menu li:hover {
+
+.dropdown-menu-li:hover {
   background-color: #db8876;
   color: #000000;
-} */
+}
 
-.dropdown-menu li::before {
+.dropdown-menu-li::before {
   content: "";
   position: absolute;
   left: 10px;
@@ -138,6 +138,10 @@ aside {
 
 .dropdown:hover .dropdown-menu {
   display: block;
+}
+
+.selected-hidden {
+  display: none;
 }
 
 .photograph-media {
@@ -156,6 +160,7 @@ aside {
 
 .legend {
   display: flex;
+
   justify-content: space-between;
   color: #901c1c;
   font-size: 1.5em;
@@ -163,6 +168,8 @@ aside {
 }
 .legend-title {
   width: 100%;
+  max-width: 283px;
+  text-overflow: ellipsis;
 }
 .legend-likes {
   margin-right: 7px;
@@ -183,7 +190,6 @@ aside {
 }
 .price-by-day {
   order: 3;
-
   width: 100%;
   text-align: end;
   margin-right: 34px;

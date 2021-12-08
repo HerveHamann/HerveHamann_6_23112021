@@ -58,38 +58,19 @@ async function displayMedia(media) {
   const mediaBoxes = media.filter(
     (element) => element.photographerId === idPageParse
   );
-
+  mediaBoxes.sort((a, b) => b.likes - a.likes);
   mediaBoxes.forEach((mediaBoxe) => {
     const mediaBox = mediaFactory(mediaBoxe);
     const mediaCardDOM = mediaBox.getMediaCardDOM();
 
     mediaSection.appendChild(mediaCardDOM);
   });
-
-  const likesNumber = document.querySelectorAll(".legend-likes");
-
-  const likes1 = parseInt(likesNumber[0].innerHTML, 10);
-  const likes2 = parseInt(likesNumber[1].innerHTML, 10);
-  const likes3 = parseInt(likesNumber[2].innerHTML, 10);
-  const likes4 = parseInt(likesNumber[3].innerHTML, 10);
-  const likes5 = parseInt(likesNumber[4].innerHTML, 10);
-  const likes6 = parseInt(likesNumber[5].innerHTML, 10);
-  const likes7 = parseInt(likesNumber[6].innerHTML, 10);
-  const likes8 = parseInt(likesNumber[7].innerHTML, 10);
-  const likes9 = parseInt(likesNumber[8].innerHTML, 10);
-  const likes10 = parseInt(likesNumber[9].innerHTML, 10);
-
-  let totalLikes =
-    likes1 +
-    likes2 +
-    likes3 +
-    likes4 +
-    likes5 +
-    likes6 +
-    likes7 +
-    likes8 +
-    likes9 +
-    likes10;
+  // nombre de coeur total
+  let totalLikes = 0;
+  mediaBoxes.map((element) => {
+    totalLikes += element.likes;
+    return totalLikes;
+  });
 
   // Ajout du total et du coeur à la barre fixe
   const fixedBar = document.querySelector(".fixed-bar");
@@ -121,19 +102,6 @@ async function displayMedia(media) {
       }
     });
   });
-
-  // Voir map() , voir sort()
-  const popularity = document.getElementById("choice-popularity");
-  popularity.addEventListener("click", () => {
-    async function switchMedia() {
-      mediaBoxes.sort((a, b) => a.likes - b.likes);
-
-      mediaBoxes.forEach((mediaboxe) => {
-        console.log(mediaboxe.likes);
-      });
-    }
-    switchMedia();
-  });
 }
 
 async function init() {
@@ -146,3 +114,152 @@ async function init() {
 }
 
 init();
+
+// Fonction de tri
+
+const selected = document.getElementById("selected-choice");
+const popularity = document.getElementById("choice-popularity");
+const date = document.getElementById("choice-date");
+const title = document.getElementById("choice-title");
+
+const selectedChoiceHidden = () => {
+  if (selected.innerHTML === popularity.innerHTML) {
+    popularity.classList.remove("dropdown-menu-li");
+    popularity.innerHTML = "";
+  } else {
+    popularity.innerHTML = "Popularité";
+    popularity.classList.add("dropdown-menu-li");
+  }
+  if (selected.innerHTML === date.innerHTML) {
+    date.classList.remove("dropdown-menu-li");
+    date.innerHTML = "";
+  } else {
+    date.innerHTML = "Date";
+    date.classList.add("dropdown-menu-li");
+  }
+  if (selected.innerHTML === title.innerHTML) {
+    title.classList.remove("dropdown-menu-li");
+    title.innerHTML = "";
+  } else {
+    title.innerHTML = "Titre";
+    title.classList.add("dropdown-menu-li");
+  }
+};
+
+selectedChoiceHidden();
+
+popularity.addEventListener("click", async () => {
+  selected.innerHTML = "Popularité";
+  selectedChoiceHidden();
+  async function sortByLike() {
+    let media = [];
+
+    await fetch("./data/photographers.json")
+      .then((res) => res.json())
+      .then((data) => {
+        media = data.media;
+      });
+
+    const mediaSection = document.querySelector(".photograph-media");
+    // mediaSection.innerHTML = "";
+    const PageQueryString = window.location.search;
+    const urlParams = new URLSearchParams(PageQueryString);
+    const idPage = urlParams.get("id");
+    // Transformation id = string en id =number pour faire la comparaison
+    const idPageParse = JSON.parse(idPage);
+
+    // Récupération des tableaux correspondant à l'id
+    const mediaBoxes = media.filter(
+      (element) => element.photographerId === idPageParse
+    );
+    mediaBoxes.sort((a, b) => b.likes - a.likes);
+    mediaBoxes.forEach((mediaBoxe) => {
+      const mediaCard = document.getElementById(mediaBoxe.id);
+
+      mediaSection.appendChild(mediaCard);
+    });
+  }
+  sortByLike();
+});
+
+date.addEventListener("click", async () => {
+  selected.innerHTML = "Date";
+  selectedChoiceHidden();
+
+  async function sortByDate() {
+    let media = [];
+
+    await fetch("./data/photographers.json")
+      .then((res) => res.json())
+      .then((data) => {
+        media = data.media;
+      });
+
+    const mediaSection = document.querySelector(".photograph-media");
+    // mediaSection.innerHTML = "";
+    const PageQueryString = window.location.search;
+    const urlParams = new URLSearchParams(PageQueryString);
+    const idPage = urlParams.get("id");
+    // Transformation id = string en id =number pour faire la comparaison
+    const idPageParse = JSON.parse(idPage);
+
+    // Récupération des tableaux correspondant à l'id
+    const mediaBoxes = media.filter(
+      (element) => element.photographerId === idPageParse
+    );
+
+    mediaBoxes.sort((a, b) => new Date(b.date) - new Date(a.date));
+    mediaBoxes.forEach((mediaBoxe) => {
+      const mediaCard = document.getElementById(mediaBoxe.id);
+
+      mediaSection.appendChild(mediaCard);
+    });
+  }
+  sortByDate();
+});
+
+title.addEventListener("click", async () => {
+  selected.innerHTML = "Titre";
+  selectedChoiceHidden();
+
+  async function sortByTitle() {
+    let media = [];
+
+    await fetch("./data/photographers.json")
+      .then((res) => res.json())
+      .then((data) => {
+        media = data.media;
+      });
+
+    const mediaSection = document.querySelector(".photograph-media");
+
+    const PageQueryString = window.location.search;
+    const urlParams = new URLSearchParams(PageQueryString);
+    const idPage = urlParams.get("id");
+    // Transformation id = string en id =number pour faire la comparaison
+    const idPageParse = JSON.parse(idPage);
+
+    // Récupération des tableaux correspondant à l'id
+    const mediaBoxes = media.filter(
+      (element) => element.photographerId === idPageParse
+    );
+
+    function compare(a, b) {
+      if (a.title < b.title) {
+        return -1;
+      }
+      if (a.title > b.title) {
+        return 1;
+      }
+      return 0;
+    }
+    mediaBoxes.sort(compare);
+
+    mediaBoxes.forEach((mediaBoxe) => {
+      const mediaCard = document.getElementById(mediaBoxe.id);
+
+      mediaSection.appendChild(mediaCard);
+    });
+  }
+  sortByTitle();
+});

@@ -3,6 +3,9 @@ export default function mediaFactory(data) {
 
   function getMediaCardDOM() {
     const article = document.createElement("article");
+    article.setAttribute("id", id); // a retirer si pas utile
+    const div = document.createElement("div");
+    div.setAttribute("class", "legend");
     if (image) {
       const picture = `./assets/images/${image}`;
       const img = document.createElement("img");
@@ -11,6 +14,12 @@ export default function mediaFactory(data) {
       img.setAttribute("tabindex", 0);
       img.setAttribute("class", "media");
       article.appendChild(img);
+
+      const titleMedia = document.createElement("p");
+      titleMedia.textContent = title;
+      titleMedia.setAttribute("tabindex", 0);
+      titleMedia.setAttribute("class", "legend-title");
+      div.appendChild(titleMedia);
     }
     if (video) {
       const movie = `assets/movies/${video}`;
@@ -19,14 +28,13 @@ export default function mediaFactory(data) {
       videoContent.setAttribute("controls", "");
       videoContent.setAttribute("class", "media");
       article.appendChild(videoContent);
-    }
-    const div = document.createElement("div");
-    div.setAttribute("class", "legend");
 
-    const titleMedia = document.createElement("p");
-    titleMedia.textContent = title;
-    titleMedia.setAttribute("tabindex", 0);
-    titleMedia.setAttribute("class", "legend-title");
+      const titleMovie = document.createElement("p");
+      titleMovie.setAttribute("tabindex", 0);
+      titleMovie.textContent = video.replace(/_/g, " ").replace(".mp4", " ");
+      titleMovie.setAttribute("class", "legend-title");
+      div.appendChild(titleMovie);
+    }
 
     const likesMedia = document.createElement("p");
     likesMedia.textContent = likes;
@@ -38,7 +46,6 @@ export default function mediaFactory(data) {
     heart.setAttribute("class", "legend-heart");
 
     article.appendChild(div);
-    div.appendChild(titleMedia);
     div.appendChild(likesMedia);
     div.appendChild(heart);
 
