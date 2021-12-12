@@ -4,7 +4,7 @@ export default function mediaFactory(data) {
   function getMediaCardDOM() {
     const article = document.createElement("article");
 
-    article.setAttribute("id", id);
+    // article.setAttribute("id", id);
     const div = document.createElement("div");
     div.setAttribute("class", "legend");
     if (image) {
@@ -14,6 +14,7 @@ export default function mediaFactory(data) {
       img.setAttribute("alt", `${title},closeup view`);
       img.setAttribute("tabindex", 0);
       img.setAttribute("class", "media");
+      img.dataset.id = id;
 
       article.appendChild(img);
 

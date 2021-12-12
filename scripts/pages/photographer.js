@@ -100,9 +100,31 @@ async function displayMedia(media) {
   //   lightBoxMediaContenair.appendChild(img);
   // };
 
-  // nextArrow.addEventListener("click", () => {
   //   NextMedia(element);
-  // });
+  nextArrow.addEventListener("click", () => {
+    let imageLightbox = document.querySelector(".lightbox-container >img");
+    console.log(imageLightbox);
+    console.log(parseInt(imageLightbox.dataset.id, 10));
+    const result = mediaBoxes.find(
+      (element) => element.id === parseInt(imageLightbox.dataset.id, 10)
+    );
+    console.log(result);
+    console.log(mediaBoxes.indexOf(result));
+
+    const i = mediaBoxes.indexOf(result);
+    const nextImage = mediaBoxes[i + 1];
+    console.log(nextImage.image);
+
+    const a = nextImage.image;
+    const picture = `./assets/images/${a}`;
+    const img = document.createElement("img");
+    img.setAttribute("src", picture);
+    img.dataset.id = mediaBoxes[i + 1].id;
+    lightBoxMediaContenair.innerHTML = "";
+    lightBoxMediaContenair.appendChild(img);
+    imageLightbox = document.querySelector(".lightbox-container >img");
+    console.log(imageLightbox);
+  });
 
   const FeedLightBox = (element) => {
     const lightBoxLinkTitle = element.nextSibling.firstChild;
@@ -114,7 +136,7 @@ async function displayMedia(media) {
     if (mediaLightBoxLink.includes(".jpg")) {
       const img = document.createElement("img");
       img.setAttribute("src", mediaLightBoxLink);
-      img.setAttribute("id", "image-lightbox");
+      img.dataset.id = element.dataset.id;
       lightBoxMediaContenair.appendChild(img);
     }
 
