@@ -43,6 +43,16 @@ async function displayData(photographers) {
   const photographersProfile = profileFactory(profile);
   const userCardDOM = photographersProfile.getUserCardDOM();
   photographersHeader.appendChild(userCardDOM);
+  // Ouverture de la modale
+  const modal = document.getElementById("contact_modal");
+  const modalIntro = document.getElementById("contact me");
+  const contactButton = document.getElementById("contact_button");
+
+  contactButton.addEventListener("click", () => {
+    modal.setAttribute("aria-hidden", "false");
+    modal.style.display = "block";
+    modalIntro.focus();
+  });
 }
 
 async function displayMedia(media) {
@@ -58,13 +68,78 @@ async function displayMedia(media) {
   const mediaBoxes = media.filter(
     (element) => element.photographerId === idPageParse
   );
+  // Création et affichage des images
   mediaBoxes.sort((a, b) => b.likes - a.likes);
   mediaBoxes.forEach((mediaBoxe) => {
     const mediaBox = mediaFactory(mediaBoxe);
     const mediaCardDOM = mediaBox.getMediaCardDOM();
-
     mediaSection.appendChild(mediaCardDOM);
   });
+
+  // ouvrir la lightbox et faire apparaitre le media correspondant
+  const lightBoxLink = document.querySelectorAll(".media");
+  const lightBoxMediaContenair = document.querySelector("#lightbox-container");
+
+  const lightBoxTitle = document.querySelector("#lightbox-container-title");
+
+  const prevArrow = document.getElementById("lightbox-prev");
+  const nextArrow = document.getElementById("lightbox-next");
+
+  prevArrow.addEventListener("click", () => {});
+  nextArrow.addEventListener("click", () => {});
+
+  // const NextMedia = (element) => {
+  //   const lightBoxNextMedia = element.parentElement.nextSibling.firstChild.src;
+  //   const newlightBoxLink = element.parentElement.nextSibling.firstChild;
+  //   console.log(lightBoxNextMedia);
+  //   console.log(newlightBoxLink);
+  //   const img = document.createElement("img");
+  //   img.setAttribute("src", lightBoxNextMedia);
+  //   img.setAttribute("id", "image-lightbox");
+  //   lightBoxMediaContenair.innerHTML = "";
+  //   lightBoxMediaContenair.appendChild(img);
+  // };
+
+  // nextArrow.addEventListener("click", () => {
+  //   NextMedia(element);
+  // });
+
+  const FeedLightBox = (element) => {
+    const lightBoxLinkTitle = element.nextSibling.firstChild;
+    lightBoxTitle.textContent = lightBoxLinkTitle.textContent;
+
+    const lightBox = document.getElementById("lightbox");
+    const mediaLightBoxLink = element.src;
+
+    if (mediaLightBoxLink.includes(".jpg")) {
+      const img = document.createElement("img");
+      img.setAttribute("src", mediaLightBoxLink);
+      img.setAttribute("id", "image-lightbox");
+      lightBoxMediaContenair.appendChild(img);
+    }
+
+    if (mediaLightBoxLink.includes(".mp4")) {
+      const video = document.createElement("video");
+      video.setAttribute("src", mediaLightBoxLink);
+      video.setAttribute("controls", "");
+      lightBoxMediaContenair.appendChild(video);
+    }
+    lightBox.setAttribute("aria-hidden", "false");
+    lightBox.style.visibility = "visible";
+    lightBox.focus();
+  };
+
+  lightBoxLink.forEach((element) => {
+    element.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        FeedLightBox(element);
+      }
+    });
+    element.addEventListener("click", () => {
+      FeedLightBox(element);
+    });
+  });
+
   // nombre de coeur total
   let totalLikes = 0;
   mediaBoxes.map((element) => {
@@ -77,6 +152,7 @@ async function displayMedia(media) {
   const totalLikesBarr = document.createElement("p");
   totalLikesBarr.textContent = `${totalLikes}`;
   totalLikesBarr.setAttribute("class", "total-likes");
+  totalLikesBarr.setAttribute("aria-label", `${totalLikes} likes`);
   fixedBar.appendChild(totalLikesBarr);
   fixedBar.setAttribute("tabindex", 0);
   const heart = document.createElement("p");
@@ -95,10 +171,34 @@ async function displayMedia(media) {
         let number = parseInt(likeCount.textContent, 10);
         likeCount.textContent = `${(number += 1)}`;
         totalLikesBarr.textContent = `${(totalLikes += 1)}`;
+        const elementLikes = element;
+        elementLikes.style.color = "#db8876";
       } else {
         let number = parseInt(likeCount.textContent, 10);
         likeCount.textContent = `${(number -= 1)}`;
         totalLikesBarr.textContent = `${(totalLikes -= 1)}`;
+        const elementLikes = element;
+        elementLikes.style.color = "#901c1c";
+      }
+    });
+    element.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        const likeCount = element.previousSibling;
+        const classes = likeCount.classList;
+        const result = classes.toggle("hearts");
+        if (result) {
+          let number = parseInt(likeCount.textContent, 10);
+          likeCount.textContent = `${(number += 1)}`;
+          totalLikesBarr.textContent = `${(totalLikes += 1)}`;
+          const elementLikes = element;
+          elementLikes.style.color = "#db8876";
+        } else {
+          let number = parseInt(likeCount.textContent, 10);
+          likeCount.textContent = `${(number -= 1)}`;
+          totalLikesBarr.textContent = `${(totalLikes -= 1)}`;
+          const elementLikes = element;
+          elementLikes.style.color = "#901c1c";
+        }
       }
     });
   });
@@ -161,7 +261,7 @@ popularity.addEventListener("click", async () => {
       });
 
     const mediaSection = document.querySelector(".photograph-media");
-    // mediaSection.innerHTML = "";
+
     const PageQueryString = window.location.search;
     const urlParams = new URLSearchParams(PageQueryString);
     const idPage = urlParams.get("id");
@@ -196,7 +296,7 @@ date.addEventListener("click", async () => {
       });
 
     const mediaSection = document.querySelector(".photograph-media");
-    // mediaSection.innerHTML = "";
+
     const PageQueryString = window.location.search;
     const urlParams = new URLSearchParams(PageQueryString);
     const idPage = urlParams.get("id");

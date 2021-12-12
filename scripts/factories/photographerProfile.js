@@ -15,6 +15,7 @@ export default function profileFactory(data) {
     img.setAttribute("src", picture);
     img.setAttribute("alt", `${name}`);
     img.setAttribute("tabindex", 0);
+    img.setAttribute("id", "photograph-img");
 
     const h1 = document.createElement("h1");
     h1.textContent = name;
@@ -30,7 +31,7 @@ export default function profileFactory(data) {
     const btn = document.createElement("button");
     btn.textContent = `Contactez-moi`;
     btn.setAttribute("class", "contact_button");
-    btn.setAttribute("onclick", "displayModal()");
+    btn.setAttribute("id", "contact_button");
     btn.setAttribute("aria-label", "Contact me");
 
     article.appendChild(textArticle);
@@ -48,6 +49,13 @@ export default function profileFactory(data) {
     pPrice.setAttribute("class", "price-by-day");
 
     fixedBar.appendChild(pPrice);
+
+    // ajout du nom dans la modale de contact
+    const contactMe = document.getElementById("contact me");
+    const nameContact = document.createElement("span");
+    nameContact.textContent = ` ${name}`;
+    contactMe.appendChild(nameContact);
+
     return article;
   }
   return { name, picture, city, country, tagline, price, id, getUserCardDOM };

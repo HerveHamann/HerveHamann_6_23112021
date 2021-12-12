@@ -15,7 +15,7 @@
     <title>Fisheye - photographe</title>
   </head>
   <body>
-    <header>
+    <header tabindex="0" id="header">
       <a href="./index.html">
         <img src="assets/images/logo.png" alt="Fisheye Home page" class="logo"
       /></a>
@@ -24,15 +24,28 @@
       <div class="photograph-header"></div>
       <article class="fixed-bar"></article>
       <aside>
-        <p class="selection">Trier par:</p>
-        <div class="dropdown">
+        <label id="sort-by" tabindex="0" class="selection">Trier par:</label>
+        <div
+          id="dropdown-menu"
+          tabindex="0"
+          role="button"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          class="dropdown"
+        >
           <div class="dropdown-button">
             <p id="selected-choice">Popularité</p>
             <div class="dropdown-arrow">
               <i class="fas fa-chevron-down"></i>
             </div>
           </div>
-          <ul class="dropdown-menu">
+          <ul
+            role="listbox"
+            aria-activedescendant="dropdown-menu"
+            aria-selected="true"
+            aria-labelledby="sort-by"
+            class="dropdown-menu"
+          >
             <li class="dropdown-menu-li" id="choice-popularity">Popularité</li>
             <li class="dropdown-menu-li" id="choice-date">Date</li>
             <li class="dropdown-menu-li" id="choice-title">Titre</li>
@@ -41,23 +54,104 @@
       </aside>
       <div class="photograph-media"></div>
     </main>
-    <div id="contact_modal">
+    <div
+      id="contact_modal"
+      role="dialog"
+      aria-labelledby="contact me"
+      aria-modal="true"
+    >
       <div class="modal">
         <header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+          <h2 tabindex="0" id="contact me">Contactez-moi</h2>
         </header>
         <form>
           <div>
-            <label>Prénom</label>
-            <input />
+            <label for="first">Prénom</label>
+            <input
+              class="text-control"
+              type="text"
+              id="first"
+              name="first"
+              minlength="2"
+            />
+            <span></span>
+            <br />
+          </div>
+          <div>
+            <label for="last">Nom</label>
+            <input
+              class="text-control"
+              type="text"
+              id="last"
+              name="last"
+              minlength="2"
+            />
+            <span></span>
+            <br />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input class="text-control" type="email" id="email" name="email" />
+            <span></span>
+            <br />
+          </div>
+          <div class="message-div">
+            <label for="message">Votre message</label>
+            <textarea
+              class="text-control"
+              type="text"
+              id="message"
+              name="message"
+            ></textarea>
+            <span></span>
+            <br />
           </div>
           <button class="contact_button">Envoyer</button>
         </form>
+        <button aria-label="close contact form" id="close-cross" role="button">
+          <img src="assets/icons/close.svg" />
+        </button>
       </div>
+    </div>
+
+    <div
+      class="lightbox"
+      id="lightbox"
+      role="dialog"
+      aria-labelledby="lightbox"
+      aria-modal="true"
+      tabindex="0"
+    >
+      <div class="lightbox-center">
+        <div
+          tabindex="0"
+          class="lightbox-container"
+          id="lightbox-container"
+        ></div>
+        <p
+          tabindex="0"
+          class="lightbox-container-title"
+          id="lightbox-container-title"
+        >
+          titre
+        </p>
+      </div>
+
+      <button id="lightbox-prev" class="lightbox-prev">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <button id="lightbox-next" class="lightbox-next">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+      <button class="lightbox-close" id="lightbox-close">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
 
     <script type="module" src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
+    <script src="scripts/utils/lightbox.js"></script>
   </body>
 </html>
