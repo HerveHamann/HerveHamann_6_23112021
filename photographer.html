@@ -118,7 +118,7 @@
       class="lightbox"
       id="lightbox"
       role="dialog"
-      aria-labelledby="lightbox"
+      aria-label="image closeup view"
       aria-modal="true"
       tabindex="0"
     >
@@ -132,20 +132,26 @@
           tabindex="0"
           class="lightbox-container-title"
           id="lightbox-container-title"
-        >
-          titre
-        </p>
+        ></p>
       </div>
 
-      <button id="lightbox-prev" class="lightbox-prev">
+      <button
+        aria-label="Previous image"
+        id="lightbox-prev"
+        class="lightbox-prev"
+      >
         <i class="fas fa-chevron-left"></i>
       </button>
 
-      <button id="lightbox-next" class="lightbox-next">
+      <button aria-label="Next image" id="lightbox-next" class="lightbox-next">
         <i class="fas fa-chevron-right"></i>
       </button>
 
-      <button class="lightbox-close" id="lightbox-close">
+      <button
+        aria-label="Close dialog"
+        class="lightbox-close"
+        id="lightbox-close"
+      >
         <i class="fas fa-times"></i>
       </button>
     </div>

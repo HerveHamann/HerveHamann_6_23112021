@@ -77,6 +77,8 @@ async function displayMedia(media) {
   });
 
   // ouvrir la lightbox et faire apparaitre le media correspondant
+  const lightBox = document.querySelector("#lightbox");
+
   const lightBoxLink = document.querySelectorAll(".media");
   const lightBoxMediaContenair = document.querySelector("#lightbox-container");
 
@@ -85,52 +87,135 @@ async function displayMedia(media) {
   const prevArrow = document.getElementById("lightbox-prev");
   const nextArrow = document.getElementById("lightbox-next");
 
-  prevArrow.addEventListener("click", () => {});
-  nextArrow.addEventListener("click", () => {});
+  // Création des nouveaux éléments (titres, images, vidéo) à partir du tableau lors de la
+  // navigation fléchée
 
-  // const NextMedia = (element) => {
-  //   const lightBoxNextMedia = element.parentElement.nextSibling.firstChild.src;
-  //   const newlightBoxLink = element.parentElement.nextSibling.firstChild;
-  //   console.log(lightBoxNextMedia);
-  //   console.log(newlightBoxLink);
-  //   const img = document.createElement("img");
-  //   img.setAttribute("src", lightBoxNextMedia);
-  //   img.setAttribute("id", "image-lightbox");
-  //   lightBoxMediaContenair.innerHTML = "";
-  //   lightBoxMediaContenair.appendChild(img);
-  // };
+  // Element précédent
+  const Previous = () => {
+    let mediaLightBox = document.querySelector(
+      ".lightbox-container"
+    ).firstChild;
 
-  //   NextMedia(element);
-  nextArrow.addEventListener("click", () => {
-    let imageLightbox = document.querySelector(".lightbox-container >img");
-    console.log(imageLightbox);
-    console.log(parseInt(imageLightbox.dataset.id, 10));
     const result = mediaBoxes.find(
-      (element) => element.id === parseInt(imageLightbox.dataset.id, 10)
+      (element) => element.id === parseInt(mediaLightBox.dataset.id, 10)
     );
-    console.log(result);
-    console.log(mediaBoxes.indexOf(result));
 
-    const i = mediaBoxes.indexOf(result);
-    const nextImage = mediaBoxes[i + 1];
-    console.log(nextImage.image);
+    let i = mediaBoxes.indexOf(result);
 
-    const a = nextImage.image;
-    const picture = `./assets/images/${a}`;
-    const img = document.createElement("img");
-    img.setAttribute("src", picture);
-    img.dataset.id = mediaBoxes[i + 1].id;
-    lightBoxMediaContenair.innerHTML = "";
-    lightBoxMediaContenair.appendChild(img);
-    imageLightbox = document.querySelector(".lightbox-container >img");
-    console.log(imageLightbox);
+    if (i === 0) {
+      i = mediaBoxes.length;
+    }
+    const nextMedia = mediaBoxes[i - 1];
+
+    if (nextMedia.image) {
+      const newDisplayImage = nextMedia.image;
+      const picture = `./assets/images/${newDisplayImage}`;
+      const img = document.createElement("img");
+      img.setAttribute("src", picture);
+      img.setAttribute("alt", nextMedia.title);
+      img.dataset.id = mediaBoxes[i - 1].id;
+
+      lightBoxMediaContenair.innerHTML = "";
+      lightBoxMediaContenair.appendChild(img);
+      lightBoxTitle.textContent = nextMedia.title;
+    }
+    if (nextMedia.video) {
+      const newDisplayVideo = nextMedia.video;
+      const movie = `./assets/movies/${newDisplayVideo}`;
+      const videoDisplay = document.createElement("video");
+      videoDisplay.setAttribute("src", movie);
+      videoDisplay.setAttribute("controls", "");
+      videoDisplay.setAttribute(
+        "aria-label",
+        nextMedia.video.replace(/_/g, " ").replace(".mp4", " ")
+      );
+      videoDisplay.dataset.id = mediaBoxes[i - 1].id;
+
+      lightBoxMediaContenair.innerHTML = "";
+      lightBoxMediaContenair.appendChild(videoDisplay);
+      lightBoxTitle.textContent = nextMedia.video
+        .replace(/_/g, " ")
+        .replace(".mp4", " ");
+    }
+
+    mediaLightBox = document.querySelector(".lightbox-container").firstChild;
+  };
+  // Element suivant
+  const Next = () => {
+    let mediaLightBox = document.querySelector(
+      ".lightbox-container"
+    ).firstChild;
+
+    const result = mediaBoxes.find(
+      (element) => element.id === parseInt(mediaLightBox.dataset.id, 10)
+    );
+
+    let i = mediaBoxes.indexOf(result);
+
+    if (i === mediaBoxes.length - 1) {
+      i = -1;
+    }
+    const nextMedia = mediaBoxes[i + 1];
+
+    if (nextMedia.image) {
+      const newDisplayImage = nextMedia.image;
+      const picture = `./assets/images/${newDisplayImage}`;
+      const img = document.createElement("img");
+      img.setAttribute("src", picture);
+      img.setAttribute("alt", nextMedia.title);
+      img.dataset.id = mediaBoxes[i + 1].id;
+
+      lightBoxMediaContenair.innerHTML = "";
+      lightBoxMediaContenair.appendChild(img);
+      lightBoxTitle.textContent = nextMedia.title;
+    }
+    if (nextMedia.video) {
+      const newDisplayVideo = nextMedia.video;
+      const movie = `./assets/movies/${newDisplayVideo}`;
+      const videoDisplay = document.createElement("video");
+      videoDisplay.setAttribute("src", movie);
+      videoDisplay.setAttribute("controls", "");
+      videoDisplay.setAttribute(
+        "aria-label",
+        nextMedia.video.replace(/_/g, " ").replace(".mp4", " ")
+      );
+      videoDisplay.dataset.id = mediaBoxes[i + 1].id;
+
+      lightBoxMediaContenair.innerHTML = "";
+      lightBoxMediaContenair.appendChild(videoDisplay);
+      lightBoxTitle.textContent = nextMedia.video
+        .replace(/_/g, " ")
+        .replace(".mp4", " ");
+    }
+
+    mediaLightBox = document.querySelector(".lightbox-container").firstChild;
+  };
+  // Evenements
+  lightBox.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") {
+      Next();
+    }
   });
+
+  lightBox.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      Previous();
+    }
+  });
+  nextArrow.addEventListener("click", () => {
+    Next();
+  });
+
+  prevArrow.addEventListener("click", () => {
+    Previous();
+  });
+
+  // Création des éléments de la light box à partir du clic dans la galerie
 
   const FeedLightBox = (element) => {
     const lightBoxLinkTitle = element.nextSibling.firstChild;
     lightBoxTitle.textContent = lightBoxLinkTitle.textContent;
 
-    const lightBox = document.getElementById("lightbox");
     const mediaLightBoxLink = element.src;
 
     if (mediaLightBoxLink.includes(".jpg")) {
@@ -144,6 +229,7 @@ async function displayMedia(media) {
       const video = document.createElement("video");
       video.setAttribute("src", mediaLightBoxLink);
       video.setAttribute("controls", "");
+      video.dataset.id = element.dataset.id;
       lightBoxMediaContenair.appendChild(video);
     }
     lightBox.setAttribute("aria-hidden", "false");
@@ -184,43 +270,32 @@ async function displayMedia(media) {
   // Ajout de la fonctionnalité + likes
   const hearts = document.querySelectorAll(".legend-heart");
 
+  const LikeFunction = (element) => {
+    const likeCount = element.previousSibling;
+    const classes = likeCount.classList;
+    const result = classes.toggle("hearts");
+    if (result) {
+      let number = parseInt(likeCount.textContent, 10);
+      likeCount.textContent = `${(number += 1)}`;
+      totalLikesBarr.textContent = `${(totalLikes += 1)}`;
+      const elementLikes = element;
+      elementLikes.style.color = "#db8876";
+    } else {
+      let number = parseInt(likeCount.textContent, 10);
+      likeCount.textContent = `${(number -= 1)}`;
+      totalLikesBarr.textContent = `${(totalLikes -= 1)}`;
+      const elementLikes = element;
+      elementLikes.style.color = "#901c1c";
+    }
+  };
+  // Evenement d'ajout de like
   hearts.forEach((element) => {
     element.addEventListener("click", () => {
-      const likeCount = element.previousSibling;
-      const classes = likeCount.classList;
-      const result = classes.toggle("hearts");
-      if (result) {
-        let number = parseInt(likeCount.textContent, 10);
-        likeCount.textContent = `${(number += 1)}`;
-        totalLikesBarr.textContent = `${(totalLikes += 1)}`;
-        const elementLikes = element;
-        elementLikes.style.color = "#db8876";
-      } else {
-        let number = parseInt(likeCount.textContent, 10);
-        likeCount.textContent = `${(number -= 1)}`;
-        totalLikesBarr.textContent = `${(totalLikes -= 1)}`;
-        const elementLikes = element;
-        elementLikes.style.color = "#901c1c";
-      }
+      LikeFunction(element);
     });
     element.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
-        const likeCount = element.previousSibling;
-        const classes = likeCount.classList;
-        const result = classes.toggle("hearts");
-        if (result) {
-          let number = parseInt(likeCount.textContent, 10);
-          likeCount.textContent = `${(number += 1)}`;
-          totalLikesBarr.textContent = `${(totalLikes += 1)}`;
-          const elementLikes = element;
-          elementLikes.style.color = "#db8876";
-        } else {
-          let number = parseInt(likeCount.textContent, 10);
-          likeCount.textContent = `${(number -= 1)}`;
-          totalLikesBarr.textContent = `${(totalLikes -= 1)}`;
-          const elementLikes = element;
-          elementLikes.style.color = "#901c1c";
-        }
+        LikeFunction(element);
       }
     });
   });
