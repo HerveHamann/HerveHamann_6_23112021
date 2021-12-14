@@ -68,14 +68,130 @@ async function displayMedia(media) {
   const mediaBoxes = media.filter(
     (element) => element.photographerId === idPageParse
   );
+  // Fonction de tri
+
+  const selected = document.getElementById("selected-choice");
+  const popularity = document.getElementById("choice-popularity");
+  const date = document.getElementById("choice-date");
+  const title = document.getElementById("choice-title");
+
+  // Choix de tri caché dans la light box
+  const selectedChoiceHidden = () => {
+    if (selected.innerHTML === popularity.innerHTML) {
+      popularity.classList.remove("dropdown-menu-li");
+      popularity.innerHTML = "";
+      popularity.removeAttribute("tabindex", "0");
+    } else {
+      popularity.innerHTML = "Popularité";
+      popularity.classList.add("dropdown-menu-li");
+      popularity.setAttribute("tabindex", "0");
+    }
+    if (selected.innerHTML === date.innerHTML) {
+      date.classList.remove("dropdown-menu-li");
+      date.innerHTML = "";
+      date.removeAttribute("tabindex", "0");
+    } else {
+      date.innerHTML = "Date";
+      date.classList.add("dropdown-menu-li");
+      date.setAttribute("tabindex", "0");
+    }
+    if (selected.innerHTML === title.innerHTML) {
+      title.classList.remove("dropdown-menu-li");
+      title.innerHTML = "";
+      title.removeAttribute("tabindex", "0");
+    } else {
+      title.innerHTML = "Titre";
+      title.classList.add("dropdown-menu-li");
+      title.setAttribute("tabindex", "0");
+    }
+  };
+
+  // Popularity tri
+
+  function sortByLike() {
+    selected.innerHTML = "Popularité";
+    selectedChoiceHidden();
+    mediaBoxes.sort((a, b) => b.likes - a.likes);
+    mediaBoxes.forEach((mediaBoxe) => {
+      const mediaCard = document.getElementById(mediaBoxe.id);
+
+      mediaSection.appendChild(mediaCard);
+    });
+  }
+  popularity.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      sortByLike();
+    }
+  });
+
+  popularity.addEventListener("click", () => {
+    sortByLike();
+  });
+  // Date tri
+
+  function sortByDate() {
+    selected.innerHTML = "Date";
+    selectedChoiceHidden();
+    mediaBoxes.sort((a, b) => new Date(b.date) - new Date(a.date));
+    mediaBoxes.forEach((mediaBoxe) => {
+      const mediaCard = document.getElementById(mediaBoxe.id);
+
+      mediaSection.appendChild(mediaCard);
+    });
+  }
+
+  date.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      sortByDate();
+    }
+  });
+  date.addEventListener("click", () => {
+    sortByDate();
+  });
+
+  // Title tri
+  function sortByTitle() {
+    selected.innerHTML = "Titre";
+
+    selectedChoiceHidden();
+    function compare(a, b) {
+      if (a.title < b.title) {
+        return -1;
+      }
+      if (a.title > b.title) {
+        return 1;
+      }
+      return 0;
+    }
+    mediaBoxes.sort(compare);
+
+    mediaBoxes.forEach((mediaBoxe) => {
+      const mediaCard = document.getElementById(mediaBoxe.id);
+
+      mediaSection.appendChild(mediaCard);
+    });
+  }
+
+  title.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      sortByTitle();
+    }
+  });
+  title.addEventListener("click", () => {
+    sortByTitle();
+  });
+
   // Création et affichage des images
-  mediaBoxes.sort((a, b) => b.likes - a.likes);
+
   mediaBoxes.forEach((mediaBoxe) => {
     const mediaBox = mediaFactory(mediaBoxe);
     const mediaCardDOM = mediaBox.getMediaCardDOM();
     mediaSection.appendChild(mediaCardDOM);
   });
 
+  // Set up tri par like par défaut
+  sortByLike();
+  selectedChoiceHidden();
   // ouvrir la lightbox et faire apparaitre le media correspondant
   const lightBox = document.querySelector("#lightbox");
 
@@ -312,151 +428,33 @@ async function init() {
 
 init();
 
-// Fonction de tri
+// Navigation dans la list box, ouverture,fermeture
+const dropdownMenu = document.querySelector("#dropdown-ul");
+const dropdownLink = document.querySelector("#dropdown-menu");
 
-const selected = document.getElementById("selected-choice");
-const popularity = document.getElementById("choice-popularity");
-const date = document.getElementById("choice-date");
-const title = document.getElementById("choice-title");
-
-const selectedChoiceHidden = () => {
-  if (selected.innerHTML === popularity.innerHTML) {
-    popularity.classList.remove("dropdown-menu-li");
-    popularity.innerHTML = "";
+function toggleNavbar() {
+  if (
+    !dropdownMenu.getAttribute("style") ||
+    dropdownMenu.getAttribute("style") === "display: none;"
+  ) {
+    dropdownMenu.style.display = "block";
+    dropdownLink.setAttribute("aria-expanded", "true");
   } else {
-    popularity.innerHTML = "Popularité";
-    popularity.classList.add("dropdown-menu-li");
+    dropdownMenu.style.display = "none";
+    dropdownLink.setAttribute("aria-expanded", "false");
+    dropdownLink.focus();
   }
-  if (selected.innerHTML === date.innerHTML) {
-    date.classList.remove("dropdown-menu-li");
-    date.innerHTML = "";
-  } else {
-    date.innerHTML = "Date";
-    date.classList.add("dropdown-menu-li");
-  }
-  if (selected.innerHTML === title.innerHTML) {
-    title.classList.remove("dropdown-menu-li");
-    title.innerHTML = "";
-  } else {
-    title.innerHTML = "Titre";
-    title.classList.add("dropdown-menu-li");
-  }
-};
+}
 
-selectedChoiceHidden();
-
-popularity.addEventListener("click", async () => {
-  selected.innerHTML = "Popularité";
-  selectedChoiceHidden();
-  async function sortByLike() {
-    let media = [];
-
-    await fetch("./data/photographers.json")
-      .then((res) => res.json())
-      .then((data) => {
-        media = data.media;
-      });
-
-    const mediaSection = document.querySelector(".photograph-media");
-
-    const PageQueryString = window.location.search;
-    const urlParams = new URLSearchParams(PageQueryString);
-    const idPage = urlParams.get("id");
-    // Transformation id = string en id =number pour faire la comparaison
-    const idPageParse = JSON.parse(idPage);
-
-    // Récupération des tableaux correspondant à l'id
-    const mediaBoxes = media.filter(
-      (element) => element.photographerId === idPageParse
-    );
-    mediaBoxes.sort((a, b) => b.likes - a.likes);
-    mediaBoxes.forEach((mediaBoxe) => {
-      const mediaCard = document.getElementById(mediaBoxe.id);
-
-      mediaSection.appendChild(mediaCard);
-    });
-  }
-  sortByLike();
+dropdownLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  toggleNavbar();
 });
 
-date.addEventListener("click", async () => {
-  selected.innerHTML = "Date";
-  selectedChoiceHidden();
+const ListLastElement = document.querySelector("#dropdown-ul").lastElementChild;
 
-  async function sortByDate() {
-    let media = [];
-
-    await fetch("./data/photographers.json")
-      .then((res) => res.json())
-      .then((data) => {
-        media = data.media;
-      });
-
-    const mediaSection = document.querySelector(".photograph-media");
-
-    const PageQueryString = window.location.search;
-    const urlParams = new URLSearchParams(PageQueryString);
-    const idPage = urlParams.get("id");
-    // Transformation id = string en id =number pour faire la comparaison
-    const idPageParse = JSON.parse(idPage);
-
-    // Récupération des tableaux correspondant à l'id
-    const mediaBoxes = media.filter(
-      (element) => element.photographerId === idPageParse
-    );
-
-    mediaBoxes.sort((a, b) => new Date(b.date) - new Date(a.date));
-    mediaBoxes.forEach((mediaBoxe) => {
-      const mediaCard = document.getElementById(mediaBoxe.id);
-
-      mediaSection.appendChild(mediaCard);
-    });
-  }
-  sortByDate();
-});
-
-title.addEventListener("click", async () => {
-  selected.innerHTML = "Titre";
-  selectedChoiceHidden();
-
-  async function sortByTitle() {
-    let media = [];
-
-    await fetch("./data/photographers.json")
-      .then((res) => res.json())
-      .then((data) => {
-        media = data.media;
-      });
-
-    const mediaSection = document.querySelector(".photograph-media");
-
-    const PageQueryString = window.location.search;
-    const urlParams = new URLSearchParams(PageQueryString);
-    const idPage = urlParams.get("id");
-    // Transformation id = string en id =number pour faire la comparaison
-    const idPageParse = JSON.parse(idPage);
-
-    // Récupération des tableaux correspondant à l'id
-    const mediaBoxes = media.filter(
-      (element) => element.photographerId === idPageParse
-    );
-
-    function compare(a, b) {
-      if (a.title < b.title) {
-        return -1;
-      }
-      if (a.title > b.title) {
-        return 1;
-      }
-      return 0;
-    }
-    mediaBoxes.sort(compare);
-
-    mediaBoxes.forEach((mediaBoxe) => {
-      const mediaCard = document.getElementById(mediaBoxe.id);
-
-      mediaSection.appendChild(mediaCard);
-    });
-  }
-  sortByTitle();
+ListLastElement.addEventListener("focusout", () => {
+  dropdownMenu.style.display = "none";
+  dropdownLink.setAttribute("aria-expanded", "false");
+  dropdownLink.focus();
 });

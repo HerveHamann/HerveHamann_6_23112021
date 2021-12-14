@@ -25,16 +25,15 @@
       <article class="fixed-bar"></article>
       <aside>
         <label id="sort-by" tabindex="0" class="selection">Trier par:</label>
-        <div
+        <button
           id="dropdown-menu"
-          tabindex="0"
           role="button"
           aria-haspopup="listbox"
           aria-expanded="false"
           class="dropdown"
         >
           <div class="dropdown-button">
-            <p id="selected-choice">Popularité</p>
+            <p aria-hidden="true" id="selected-choice"></p>
             <div class="dropdown-arrow">
               <i class="fas fa-chevron-down"></i>
             </div>
@@ -45,12 +44,34 @@
             aria-selected="true"
             aria-labelledby="sort-by"
             class="dropdown-menu"
+            id="dropdown-ul"
           >
-            <li class="dropdown-menu-li" id="choice-popularity">Popularité</li>
-            <li class="dropdown-menu-li" id="choice-date">Date</li>
-            <li class="dropdown-menu-li" id="choice-title">Titre</li>
+            <li
+              tabindex="0"
+              role="option"
+              class="dropdown-menu-li"
+              id="choice-popularity"
+            >
+              Popularité
+            </li>
+            <li
+              tabindex="0"
+              role="option"
+              class="dropdown-menu-li"
+              id="choice-date"
+            >
+              Date
+            </li>
+            <li
+              tabindex="0"
+              role="option"
+              class="dropdown-menu-li"
+              id="choice-title"
+            >
+              Titre
+            </li>
           </ul>
-        </div>
+        </button>
       </aside>
       <div class="photograph-media"></div>
     </main>
