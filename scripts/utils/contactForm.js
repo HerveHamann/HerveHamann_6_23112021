@@ -19,7 +19,7 @@ modal.addEventListener("keydown", (e) => {
 closeCross.addEventListener("keydown", (e) => {
   if (e.key === "Tab") {
     e.preventDefault();
-    closeCross.focus();
+    closeModal();
   }
 });
 

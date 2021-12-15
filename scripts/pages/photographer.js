@@ -75,6 +75,32 @@ async function displayMedia(media) {
   const date = document.getElementById("choice-date");
   const title = document.getElementById("choice-title");
 
+  // Navigation dans la list box,
+  const dropdownMenu = document.querySelector("#dropdown-ul");
+  const dropdownLink = document.querySelector("#dropdown-menu");
+  const arrow = document.querySelector("#dropdown-arrow");
+
+  function toggleNavbar() {
+    if (
+      !dropdownMenu.getAttribute("style") ||
+      dropdownMenu.getAttribute("style") === "display: none;"
+    ) {
+      dropdownMenu.style.display = "block";
+      dropdownLink.setAttribute("aria-expanded", "true");
+      arrow.classList.add("arrow-move");
+    } else {
+      dropdownMenu.style.display = "none";
+      dropdownLink.setAttribute("aria-expanded", "false");
+      dropdownLink.focus();
+      arrow.classList.remove("arrow-move");
+    }
+  }
+
+  dropdownLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    toggleNavbar();
+  });
+
   // Choix de tri caché dans la light box
   const selectedChoiceHidden = () => {
     if (selected.innerHTML === popularity.innerHTML) {
@@ -429,34 +455,3 @@ async function init() {
 }
 
 init();
-
-// Navigation dans la list box, ouverture,fermeture
-const dropdownMenu = document.querySelector("#dropdown-ul");
-const dropdownLink = document.querySelector("#dropdown-menu");
-
-function toggleNavbar() {
-  if (
-    !dropdownMenu.getAttribute("style") ||
-    dropdownMenu.getAttribute("style") === "display: none;"
-  ) {
-    dropdownMenu.style.display = "block";
-    dropdownLink.setAttribute("aria-expanded", "true");
-  } else {
-    dropdownMenu.style.display = "none";
-    dropdownLink.setAttribute("aria-expanded", "false");
-    dropdownLink.focus();
-  }
-}
-
-dropdownLink.addEventListener("click", (e) => {
-  e.preventDefault();
-  toggleNavbar();
-});
-
-const ListLastElement = document.querySelector("#dropdown-ul").lastElementChild;
-
-ListLastElement.addEventListener("focusout", () => {
-  dropdownMenu.style.display = "none";
-  dropdownLink.setAttribute("aria-expanded", "false");
-  dropdownLink.focus();
-});

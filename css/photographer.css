@@ -115,8 +115,8 @@ aside {
   background-color: #db8876;
   color: #000000;
 }
-.dropdown:hover .dropdown-arrow,
-.dropdown:focus .dropdown-arrow {
+
+.arrow-move {
   transform: rotate(180deg);
 }
 
@@ -139,7 +139,7 @@ aside {
 }
 
 .dropdown-menu-li {
-  padding: 14px 0 14px 20px;
+  padding: 20px 0 20px 20px;
   position: relative;
   text-align: start;
 }
