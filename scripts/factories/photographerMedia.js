@@ -52,14 +52,14 @@ export default function mediaFactory(data) {
 
     const likesMedia = document.createElement("p");
     likesMedia.textContent = likes;
-
+    likesMedia.setAttribute("tabindex", 0);
     likesMedia.setAttribute("class", "legend-likes");
 
     const heart = document.createElement("p");
     heart.innerHTML = `<i class="fas fa-heart"></i>`;
     heart.setAttribute("class", "legend-heart");
     heart.setAttribute("tabindex", 0);
-    heart.setAttribute("aria-label", `${likes} likes`);
+    heart.setAttribute("aria-label", ` likes`);
     article.appendChild(div);
     div.appendChild(likesMedia);
     div.appendChild(heart);

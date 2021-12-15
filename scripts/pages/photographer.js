@@ -45,7 +45,7 @@ async function displayData(photographers) {
   photographersHeader.appendChild(userCardDOM);
   // Ouverture de la modale
   const modal = document.getElementById("contact_modal");
-  const modalIntro = document.getElementById("contact me");
+  const modalIntro = document.getElementById("contact-me");
   const contactButton = document.getElementById("contact_button");
 
   contactButton.addEventListener("click", () => {
@@ -333,10 +333,12 @@ async function displayMedia(media) {
     lightBoxTitle.textContent = lightBoxLinkTitle.textContent;
 
     const mediaLightBoxLink = element.src;
+    const altTitle = element.alt;
 
     if (mediaLightBoxLink.includes(".jpg")) {
       const img = document.createElement("img");
       img.setAttribute("src", mediaLightBoxLink);
+      img.setAttribute("alt", altTitle);
       img.dataset.id = element.dataset.id;
       lightBoxMediaContenair.appendChild(img);
     }

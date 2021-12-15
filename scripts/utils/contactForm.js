@@ -16,9 +16,15 @@ modal.addEventListener("keydown", (e) => {
     closeModal();
   }
 });
+closeCross.addEventListener("keydown", (e) => {
+  if (e.key === "Tab") {
+    e.preventDefault();
+    closeCross.focus();
+  }
+});
 
-const inputs = document.querySelectorAll(".text-control");
 const submit = document.getElementById("contact_modal");
+const inputs = document.querySelectorAll(".text-control");
 
 let first;
 let last;

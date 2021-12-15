@@ -51,7 +51,7 @@ export default function profileFactory(data) {
     fixedBar.appendChild(pPrice);
 
     // ajout du nom dans la modale de contact
-    const contactMe = document.getElementById("contact me");
+    const contactMe = document.getElementById("contact-me");
     const nameContact = document.createElement("span");
     nameContact.textContent = ` ${name}`;
     contactMe.appendChild(nameContact);
