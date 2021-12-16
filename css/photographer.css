@@ -322,11 +322,17 @@ form div {
   height: 100%;
   width: 100%;
   overflow: auto;
+
+  background-color: white;
+}
+
+.general-container {
   display: flex;
   column-gap: 27px;
   justify-content: center;
-  background-color: white;
+  position: relative;
 }
+
 .lightbox-next,
 .lightbox-prev,
 .lightbox-close {
@@ -345,12 +351,10 @@ form div {
 .lightbox-prev {
   order: 1;
   position: relative;
-  top: -131px;
 }
 .lightbox-next {
   order: 3;
   position: relative;
-  top: -131px;
 }
 .lightbox-close {
   font-size: 60px;

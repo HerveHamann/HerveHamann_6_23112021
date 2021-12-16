@@ -142,38 +142,44 @@
       aria-modal="true"
       tabindex="0"
     >
-      <div class="lightbox-center">
-        <div
-          tabindex="0"
-          class="lightbox-container"
-          id="lightbox-container"
-        ></div>
-        <p
-          tabindex="0"
-          class="lightbox-container-title"
-          id="lightbox-container-title"
-        ></p>
+      <div class="general-container">
+        <div class="lightbox-center">
+          <div
+            tabindex="0"
+            class="lightbox-container"
+            id="lightbox-container"
+          ></div>
+          <p
+            tabindex="0"
+            class="lightbox-container-title"
+            id="lightbox-container-title"
+          ></p>
+        </div>
+
+        <button
+          aria-label="Previous image"
+          id="lightbox-prev"
+          class="lightbox-prev"
+        >
+          <div class="fas fa-chevron-left"></div>
+        </button>
+
+        <button
+          aria-label="Next image"
+          id="lightbox-next"
+          class="lightbox-next"
+        >
+          <div class="fas fa-chevron-right"></div>
+        </button>
+
+        <button
+          aria-label="Close dialog"
+          class="lightbox-close"
+          id="lightbox-close"
+        >
+          <div class="fas fa-times"></div>
+        </button>
       </div>
-
-      <button
-        aria-label="Previous image"
-        id="lightbox-prev"
-        class="lightbox-prev"
-      >
-        <div class="fas fa-chevron-left"></div>
-      </button>
-
-      <button aria-label="Next image" id="lightbox-next" class="lightbox-next">
-        <div class="fas fa-chevron-right"></div>
-      </button>
-
-      <button
-        aria-label="Close dialog"
-        class="lightbox-close"
-        id="lightbox-close"
-      >
-        <div class="fas fa-times"></div>
-      </button>
     </div>
 
     <script type="module" src="scripts/pages/photographer.js"></script>
